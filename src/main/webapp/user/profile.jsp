@@ -24,14 +24,21 @@
     <form action="<%= request.getContextPath() %>/profile" method="post">
         <p>Email: <input type="email" name="email" value="<%= user.getEmail() %>" required></p>
         <p>Password: <input type="text" name="password" value="<%= user.getPassword() %>" required></p>
-        <p>Membership:
-            <select name="membershipType">
-                <option value="REGULAR" <%= "REGULAR".equals(user.getMembershipType()) ? "selected" : "" %>>Regular</option>
-                <option value="PREMIUM" <%= "PREMIUM".equals(user.getMembershipType()) ? "selected" : "" %>>Premium</option>
-            </select>
-        </p>
+
+        <% if ("ADMIN".equals(user.getMembershipType())) { %>
+            <p>Membership: ADMIN</p>
+        <% } else { %>
+            <p>Membership:
+                <select name="membershipType">
+                    <option value="REGULAR" <%= "REGULAR".equals(user.getMembershipType()) ? "selected" : "" %>>Regular</option>
+                    <option value="PREMIUM" <%= "PREMIUM".equals(user.getMembershipType()) ? "selected" : "" %>>Premium</option>
+                </select>
+            </p>
+        <% } %>
+
         <button type="submit">Update</button>
     </form>
+
     <p><a href="<%= request.getContextPath() %>/logout">Logout</a></p>
 </body>
 </html>
