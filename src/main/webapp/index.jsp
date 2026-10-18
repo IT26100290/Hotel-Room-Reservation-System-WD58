@@ -11,6 +11,7 @@
         <li><a href="<%= request.getContextPath() %>/login">Login</a></li>
         <li><a href="<%= request.getContextPath() %>/profile">My Profile</a></li>
         <li><a href="<%= request.getContextPath() %>/users">User List (Admin)</a></li>
+        <li><a href="<%= request.getContextPath() %>/logout">Logout</a></li>
     </ul>
 </body>
 </html>

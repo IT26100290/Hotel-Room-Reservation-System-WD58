@@ -1,5 +1,6 @@
 package com.hotel.service;
 
+import com.hotel.model.AdminUser;
 import com.hotel.model.PremiumGuest;
 import com.hotel.model.RegularGuest;
 import com.hotel.model.User;
@@ -11,6 +12,7 @@ import java.util.List;
 public class UserService {
 
     private static final String FILE_NAME = "users.txt";
+
 
     public void addUser(User user) {
         FileHandler.appendLine(FILE_NAME, user.toFileString());
@@ -46,7 +48,6 @@ public class UserService {
         return null;
     }
 
-
     public List<User> searchUsers(String keyword) {
         List<User> results = new ArrayList<>();
         String key = keyword.toLowerCase();
@@ -59,7 +60,6 @@ public class UserService {
         }
         return results;
     }
-
 
     public boolean updateUser(User updated) {
         List<String> lines = new ArrayList<>();
@@ -78,7 +78,6 @@ public class UserService {
         return found;
     }
 
-
     public boolean deleteUser(String id) {
         List<String> lines = new ArrayList<>();
         boolean found = false;
@@ -95,7 +94,6 @@ public class UserService {
         return found;
     }
 
-    // Returns the user if username and password match, otherwise null
     public User login(String username, String password) {
         User user = findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
@@ -103,7 +101,6 @@ public class UserService {
         }
         return null;
     }
-
 
     public String generateNextId() {
         int max = 0;
@@ -120,15 +117,18 @@ public class UserService {
         return String.format("U%03d", max + 1);
     }
 
-
     private User lineToUser(String line) {
         String[] parts = line.split(",");
         if (parts.length < 5) {
             return null;
         }
-        if (parts[4].equals("PREMIUM")) {
-            return new PremiumGuest(parts[0], parts[1], parts[2], parts[3]);
+        switch (parts[4]) {
+            case "PREMIUM":
+                return new PremiumGuest(parts[0], parts[1], parts[2], parts[3]);
+            case "ADMIN":
+                return new AdminUser(parts[0], parts[1], parts[2], parts[3]);
+            default:
+                return new RegularGuest(parts[0], parts[1], parts[2], parts[3]);
         }
-        return new RegularGuest(parts[0], parts[1], parts[2], parts[3]);
     }
 }

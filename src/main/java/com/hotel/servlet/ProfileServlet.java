@@ -1,5 +1,6 @@
 package com.hotel.servlet;
 
+import com.hotel.model.AdminUser;
 import com.hotel.model.PremiumGuest;
 import com.hotel.model.RegularGuest;
 import com.hotel.model.User;
@@ -18,6 +19,7 @@ public class ProfileServlet extends HttpServlet {
 
     private UserService userService = new UserService();
 
+    // READ: show the logged-in user's details
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,11 +28,11 @@ public class ProfileServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-        // Reload from the file so we always show the latest saved data
         request.setAttribute("user", userService.findById(sessionUser.getId()));
         request.getRequestDispatcher("/user/profile.jsp").forward(request, response);
     }
 
+    // UPDATE: save the changed email, password and membership type
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -52,7 +54,10 @@ public class ProfileServlet extends HttpServlet {
         }
 
         User updated;
-        if ("PREMIUM".equals(type)) {
+        if (sessionUser instanceof AdminUser) {
+            // admins stay admins; the membership dropdown is ignored for them
+            updated = new AdminUser(sessionUser.getId(), sessionUser.getUsername(), password, email);
+        } else if ("PREMIUM".equals(type)) {
             updated = new PremiumGuest(sessionUser.getId(), sessionUser.getUsername(), password, email);
         } else {
             updated = new RegularGuest(sessionUser.getId(), sessionUser.getUsername(), password, email);

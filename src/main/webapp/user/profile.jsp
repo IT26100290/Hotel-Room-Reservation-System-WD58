@@ -32,5 +32,6 @@
         </p>
         <button type="submit">Update</button>
     </form>
+    <p><a href="<%= request.getContextPath() %>/logout">Logout</a></p>
 </body>
 </html>
