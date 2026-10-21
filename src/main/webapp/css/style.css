@@ -1,0 +1,31 @@
+body {
+    background: #f4f6f9;
+}
+
+.hotel-nav {
+    background: #1f3a5f;
+}
+
+.hotel-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.hotel-hero {
+    background: linear-gradient(135deg, #1f3a5f, #3d6a9e);
+    color: #fff;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+}
+
+.btn-hotel {
+    background: #c9a227;
+    border: none;
+    color: #fff;
+}
+
+.btn-hotel:hover {
+    background: #b08d1f;
+    color: #fff;
+}
