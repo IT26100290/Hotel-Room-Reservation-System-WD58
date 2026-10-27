@@ -14,6 +14,7 @@
             <% } else { %>
                 <a class="nav-link" href="<%= ctx %>/profile">My Profile</a>
                 <a class="nav-link" href="<%= ctx %>/reservations">My Reservations</a>
+                <a class="nav-link" href="<%= ctx %>/payments">Payments</a>
                 <a class="nav-link" href="<%= ctx %>/rooms">Rooms</a>
                 <% if (navAdmin) { %>
                     <a class="nav-link" href="<%= ctx %>/users">Manage Users</a>
