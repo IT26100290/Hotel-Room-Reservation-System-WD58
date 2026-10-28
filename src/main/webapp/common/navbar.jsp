@@ -16,6 +16,7 @@
                 <a class="nav-link" href="<%= ctx %>/reservations">My Reservations</a>
                 <a class="nav-link" href="<%= ctx %>/payments">Payments</a>
                 <a class="nav-link" href="<%= ctx %>/rooms">Rooms</a>
+                <a class="nav-link" href="<%= ctx %>/reviews">Reviews</a>
                 <% if (navAdmin) { %>
                     <a class="nav-link" href="<%= ctx %>/users">Manage Users</a>
                 <% } %>
