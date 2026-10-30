@@ -10,12 +10,15 @@
 </head>
 <body>
     <%@ include file="/common/navbar.jsp" %>
+    <% boolean isRoomAdmin = session.getAttribute("loggedUser") instanceof com.hotel.model.AdminUser; %>
 
     <div class="container">
         <div class="card hotel-card p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h3 class="mb-0">Rooms</h3>
+                <% if (isRoomAdmin) { %>
                 <a class="btn btn-hotel" href="<%= request.getContextPath() %>/addRoom">+ Add Room</a>
+                <% } %>
             </div>
 
             <form class="row g-2 mb-3" action="<%= request.getContextPath() %>/rooms" method="get">
@@ -35,7 +38,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th>ID</th><th>Room No</th><th>Type</th><th>Price / night</th>
-                            <th>1 night total</th><th>Status</th><th>Actions</th>
+                            <th>1 night total</th><th>Status</th><% if (isRoomAdmin) { %><th>Actions</th><% } %>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +54,7 @@
                             <td><%= String.format("%.2f", r.getPricePerNight()) %></td>
                             <td><%= String.format("%.2f", r.calculateTotal(1)) %></td>
                             <td><%= r.getStatus() %></td>
+                            <% if (isRoomAdmin) { %>
                             <td class="d-flex gap-1">
                                 <a class="btn btn-sm btn-outline-primary"
                                    href="<%= request.getContextPath() %>/editRoom?id=<%= r.getId() %>">Edit</a>
@@ -60,6 +64,7 @@
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </td>
+                            <% } %>
                         </tr>
                     <% } %>
                     </tbody>
