@@ -1,6 +1,7 @@
 package com.hotel.servlet;
 
 import com.hotel.model.Room;
+import com.hotel.model.AdminUser;
 import com.hotel.service.RoomService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,6 +20,11 @@ public class EditRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Object loggedUser = request.getSession().getAttribute("loggedUser");
+        if (!(loggedUser instanceof AdminUser)) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
         Room room = roomService.findById(request.getParameter("id"));
         if (room == null) {
             response.sendRedirect(request.getContextPath() + "/rooms");
@@ -32,6 +38,11 @@ public class EditRoomServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Object loggedUser = request.getSession().getAttribute("loggedUser");
+        if (!(loggedUser instanceof AdminUser)) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
         String id = request.getParameter("id");
         String roomNumber = request.getParameter("roomNumber").trim();
         String type = request.getParameter("type");

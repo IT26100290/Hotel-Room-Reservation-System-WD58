@@ -1,5 +1,6 @@
 package com.hotel.servlet;
 
+import com.hotel.model.AdminUser;
 import com.hotel.service.RoomService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +19,11 @@ public class DeleteRoomServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Object loggedUser = request.getSession().getAttribute("loggedUser");
+        if (!(loggedUser instanceof AdminUser)) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
         String id = request.getParameter("id");
         if (id != null) {
             roomService.deleteRoom(id);
